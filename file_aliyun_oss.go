@@ -1,10 +1,10 @@
 package transfer
 
 import (
-	"encoding/json"
+	`encoding/json`
 
-	"github.com/aliyun/aliyun-oss-go-sdk/oss"
-	log "github.com/sirupsen/logrus"
+	`github.com/aliyun/aliyun-oss-go-sdk/oss`
+	log `github.com/sirupsen/logrus`
 )
 
 // AliyunOss 阿里云Oss存储

@@ -1,10 +1,10 @@
 package transfer
 
 import (
-	"encoding/json"
-	"os"
+	`encoding/json`
+	`os`
 
-	"github.com/storezhang/gox"
+	`github.com/storezhang/gox`
 )
 
 const (

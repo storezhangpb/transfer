@@ -1,7 +1,7 @@
 package transfer
 
 import (
-	"github.com/storezhang/gox"
+	`github.com/storezhang/gox`
 )
 
 var (

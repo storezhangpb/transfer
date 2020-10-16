@@ -1,13 +1,13 @@
 package transfer
 
 import (
-	"encoding/json"
-	"io/ioutil"
-	"net/http"
+	`encoding/json`
+	`io/ioutil`
+	`net/http`
 
-	"github.com/go-resty/resty/v2"
-	log "github.com/sirupsen/logrus"
-	"github.com/storezhang/gox"
+	`github.com/go-resty/resty/v2`
+	log `github.com/sirupsen/logrus`
+	`github.com/storezhang/gox`
 )
 
 // TencentCos 腾讯云Cos存储

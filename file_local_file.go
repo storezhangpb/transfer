@@ -1,9 +1,9 @@
 package transfer
 
 import (
-	"encoding/json"
+	`encoding/json`
 
-	"github.com/storezhang/gox"
+	`github.com/storezhang/gox`
 )
 
 // LocalFile 本地文件

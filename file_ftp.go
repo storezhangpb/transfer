@@ -1,14 +1,14 @@
 package transfer
 
 import (
-	"encoding/json"
-	"io"
-	"os"
-	"path/filepath"
-	"time"
+	`encoding/json`
+	`io`
+	`os`
+	`path/filepath`
+	`time`
 
-	"github.com/jlaffaye/ftp"
-	log "github.com/sirupsen/logrus"
+	`github.com/jlaffaye/ftp`
+	log `github.com/sirupsen/logrus`
 )
 
 // FTP Ftp存储

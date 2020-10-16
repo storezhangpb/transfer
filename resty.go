@@ -1,9 +1,9 @@
 package transfer
 
 import (
-	"crypto/tls"
+	`crypto/tls`
 
-	"github.com/go-resty/resty/v2"
+	`github.com/go-resty/resty/v2`
 )
 
 // NewResty Resty客户端
