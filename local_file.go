@@ -11,9 +11,9 @@ type LocalFile struct{}
 
 func NewLocalFile(filename string) File {
 	return File{
-		StorageType: StorageTypeLocalFile,
-		Filename:    filename,
-		Storage:     LocalFile{},
+		Type:     FileTypeLocalFile,
+		Filename: filename,
+		Storage:  LocalFile{},
 	}
 }
 

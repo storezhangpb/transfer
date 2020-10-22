@@ -20,7 +20,7 @@ type AliyunOss struct {
 
 // NewAliyunOssFile 创建一个阿里云文件
 func NewAliyunOssFile(filename string, oss AliyunOss) File {
-	return NewFile(StorageTypeAliyunOss, filename, oss)
+	return NewFile(FileTypeAliyunOss, filename, oss)
 }
 
 func (ao AliyunOss) getBucket() (bucket *oss.Bucket, err error) {

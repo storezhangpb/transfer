@@ -9,24 +9,24 @@ import (
 
 const (
 	// 存储类型
-	// StorageTypeTencentCos 腾讯云Cos
-	StorageTypeTencentCos StorageType = "cos"
-	// StorageTypeAliyunOss 阿里云Oss
-	StorageTypeAliyunOss StorageType = "oss"
-	// StorageTypeFTP FTP存储
-	StorageTypeFTP StorageType = "ftp"
-	// StorageTypeLocalFile 本地存储
-	StorageTypeLocalFile StorageType = "local"
+	// FileTypeHttp Http存储
+	FileTypeHttp FileType = "http"
+	// FileTypeAliyunOss 阿里云Oss
+	FileTypeAliyunOss FileType = "oss"
+	// FileTypeFtp Ftp存储
+	FileTypeFtp FileType = "ftp"
+	// FileTypeLocalFile 本地存储
+	FileTypeLocalFile FileType = "local"
 )
 
 type (
-	// StorageType 存储类型
-	StorageType string
+	// FileType 文件类型
+	FileType string
 
 	// File 文件
 	File struct {
-		// StorageType 类型
-		StorageType StorageType `json:"storageType" validate:"required,oneof=cos oss ftp"`
+		// Type 类型
+		Type FileType `json:"type" validate:"required,oneof=http oss ftp local"`
 		// Filename 文件名
 		Filename string `json:"filename" validate:"required"`
 		// Storage 存储
@@ -34,11 +34,11 @@ type (
 	}
 )
 
-func NewFile(storageType StorageType, filename string, storage interface{}) File {
+func NewFile(fileType FileType, filename string, storage interface{}) File {
 	return File{
-		StorageType: storageType,
-		Filename:    filename,
-		Storage:     storage,
+		Type:     fileType,
+		Filename: filename,
+		Storage:  storage,
 	}
 }
 
@@ -67,26 +67,26 @@ func (f *File) UnmarshalJSON(data []byte) (err error) {
 		return
 	}
 
-	switch f.StorageType {
-	case StorageTypeTencentCos:
-		cos := TencentCos{}
+	switch f.Type {
+	case FileTypeHttp:
+		cos := Http{}
 		if err = json.Unmarshal(rawMsg, &cos); nil != err {
 			return
 		}
 		f.Storage = cos
-	case StorageTypeAliyunOss:
+	case FileTypeAliyunOss:
 		oss := AliyunOss{}
 		if err = json.Unmarshal(rawMsg, &oss); nil != err {
 			return
 		}
 		f.Storage = oss
-	case StorageTypeFTP:
+	case FileTypeFtp:
 		ftp := FTP{}
 		if err = json.Unmarshal(rawMsg, &ftp); nil != err {
 			return
 		}
 		f.Storage = ftp
-	case StorageTypeLocalFile:
+	case FileTypeLocalFile:
 		local := LocalFile{}
 		if err = json.Unmarshal(rawMsg, &local); nil != err {
 			return

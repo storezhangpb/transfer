@@ -10,19 +10,23 @@ import (
 	`github.com/storezhang/gox`
 )
 
-// TencentCos 腾讯云Cos存储
-type TencentCos struct {
-	// 预签名地址
-	PreassignedURL string `json:"preassignedURL"`
-	// 方法
+// Http Http存储
+type Http struct {
+	// Url 访问地址
+	Url string `json:"url"`
+	// Method 方法
 	Method gox.HttpMethod `json:"method"`
 }
 
-func NewTencentCosFile(filename string, cos TencentCos) File {
-	return NewFile(StorageTypeTencentCos, filename, cos)
+// NewHttpFile 创建Http存储文件
+func NewHttpFile(filename string, url string, method gox.HttpMethod) File {
+	return NewFile(FileTypeHttp, filename, Http{
+		Url:    url,
+		Method: method,
+	})
 }
 
-func (tc TencentCos) Upload(destFilename string, srcFilename string) (err error) {
+func (tc Http) Upload(destFilename string, srcFilename string) (err error) {
 	var (
 		req *resty.Request
 		rsp *resty.Response
@@ -41,16 +45,16 @@ func (tc TencentCos) Upload(destFilename string, srcFilename string) (err error)
 	req = NewResty().SetBody(fileBytes).SetHeader(gox.HeaderContentType, contentType)
 	switch tc.Method {
 	case gox.HttpMethodPut:
-		rsp, err = req.Put(tc.PreassignedURL)
+		rsp, err = req.Put(tc.Url)
 	case gox.HttpMethodGet:
-		rsp, err = req.Get(tc.PreassignedURL)
+		rsp, err = req.Get(tc.Url)
 	default:
-		rsp, err = req.Put(tc.PreassignedURL)
+		rsp, err = req.Put(tc.Url)
 	}
 
 	if nil != err {
 		log.WithFields(log.Fields{
-			"preassignedURL": tc.PreassignedURL,
+			"preassignedURL": tc.Url,
 			"fileKey":        destFilename,
 			"filename":       srcFilename,
 			"error":          err,
@@ -61,14 +65,14 @@ func (tc TencentCos) Upload(destFilename string, srcFilename string) (err error)
 
 	if http.StatusOK != rsp.StatusCode() {
 		log.WithFields(log.Fields{
-			"preassignedURL": tc.PreassignedURL,
+			"preassignedURL": tc.Url,
 			"fileKey":        destFilename,
 			"filename":       srcFilename,
 			"error":          err,
 		}).Error("上传文件失败")
 	} else {
 		log.WithFields(log.Fields{
-			"preassignedURL": tc.PreassignedURL,
+			"preassignedURL": tc.Url,
 			"fileKey":        destFilename,
 			"filename":       srcFilename,
 		}).Debug("上传文件成功")
@@ -77,7 +81,7 @@ func (tc TencentCos) Upload(destFilename string, srcFilename string) (err error)
 	return
 }
 
-func (tc TencentCos) Download(srcFilename string, destFilename string) (err error) {
+func (tc Http) Download(srcFilename string, destFilename string) (err error) {
 	var (
 		req *resty.Request
 		rsp *resty.Response
@@ -86,16 +90,16 @@ func (tc TencentCos) Download(srcFilename string, destFilename string) (err erro
 	req = NewResty().SetOutput(destFilename)
 	switch tc.Method {
 	case gox.HttpMethodPut:
-		rsp, err = req.Put(tc.PreassignedURL)
+		rsp, err = req.Put(tc.Url)
 	case gox.HttpMethodGet:
-		rsp, err = req.Get(tc.PreassignedURL)
+		rsp, err = req.Get(tc.Url)
 	default:
-		rsp, err = req.Get(tc.PreassignedURL)
+		rsp, err = req.Get(tc.Url)
 	}
 
 	if nil != err {
 		log.WithFields(log.Fields{
-			"preassignedURL": tc.PreassignedURL,
+			"preassignedURL": tc.Url,
 			"fileKey":        destFilename,
 			"filename":       srcFilename,
 			"error":          err,
@@ -106,14 +110,14 @@ func (tc TencentCos) Download(srcFilename string, destFilename string) (err erro
 
 	if http.StatusOK != rsp.StatusCode() {
 		log.WithFields(log.Fields{
-			"preassignedURL": tc.PreassignedURL,
+			"preassignedURL": tc.Url,
 			"fileKey":        destFilename,
 			"filename":       srcFilename,
 			"error":          err,
 		}).Error("下载文件失败")
 	} else {
 		log.WithFields(log.Fields{
-			"preassignedURL": tc.PreassignedURL,
+			"preassignedURL": tc.Url,
 			"fileKey":        destFilename,
 			"filename":       srcFilename,
 		}).Debug("下载文件成功")
@@ -122,7 +126,7 @@ func (tc TencentCos) Download(srcFilename string, destFilename string) (err erro
 	return
 }
 
-func (tc TencentCos) String() string {
+func (tc Http) String() string {
 	jsonBytes, _ := json.MarshalIndent(tc, "", "    ")
 
 	return string(jsonBytes)

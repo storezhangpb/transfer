@@ -26,7 +26,7 @@ type FTP struct {
 }
 
 func NewFTPFile(filename string, ftp FTP) File {
-	return NewFile(StorageTypeFTP, filename, ftp)
+	return NewFile(FileTypeFtp, filename, ftp)
 }
 
 func (f FTP) init() (err error) {
