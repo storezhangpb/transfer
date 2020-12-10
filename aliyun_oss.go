@@ -7,6 +7,8 @@ import (
 	log `github.com/sirupsen/logrus`
 )
 
+var _ Transfer = (*AliyunOss)(nil)
+
 // AliyunOss 阿里云Oss存储
 type AliyunOss struct {
 	// 端点

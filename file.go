@@ -81,7 +81,7 @@ func (f *File) UnmarshalJSON(data []byte) (err error) {
 		}
 		f.Storage = oss
 	case FileTypeFtp:
-		ftp := FTP{}
+		ftp := Ftp{}
 		if err = json.Unmarshal(rawMsg, &ftp); nil != err {
 			return
 		}

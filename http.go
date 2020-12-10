@@ -10,6 +10,8 @@ import (
 	`github.com/storezhang/gox`
 )
 
+var _ Transfer = (*Http)(nil)
+
 // Http Http存储
 type Http struct {
 	// Url 访问地址

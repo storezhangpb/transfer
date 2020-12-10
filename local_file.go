@@ -6,6 +6,8 @@ import (
 	`github.com/storezhang/gox`
 )
 
+var _ Transfer = (*LocalFile)(nil)
+
 // LocalFile 本地文件
 type LocalFile struct{}
 

@@ -11,8 +11,10 @@ import (
 	log `github.com/sirupsen/logrus`
 )
 
-// FTP Ftp存储
-type FTP struct {
+var _ Transfer = (*Ftp)(nil)
+
+// Ftp Ftp存储
+type Ftp struct {
 	// 地址
 	Addr string `json:"addr"`
 	// 用户名
@@ -25,11 +27,11 @@ type FTP struct {
 	startup bool
 }
 
-func NewFTPFile(filename string, ftp FTP) File {
+func NewFtpFile(filename string, ftp Ftp) File {
 	return NewFile(FileTypeFtp, filename, ftp)
 }
 
-func (f FTP) init() (err error) {
+func (f Ftp) init() (err error) {
 	if !f.startup {
 		if f.client, err = ftp.Dial(f.Addr, ftp.DialWithTimeout(5*time.Second)); err != nil {
 			log.WithFields(log.Fields{
@@ -56,7 +58,7 @@ func (f FTP) init() (err error) {
 	return
 }
 
-func (f FTP) Upload(destFilename string, srcFilename string) (err error) {
+func (f Ftp) Upload(destFilename string, srcFilename string) (err error) {
 	var srcFile *os.File
 
 	if err = f.init(); nil != err {
@@ -100,7 +102,7 @@ func (f FTP) Upload(destFilename string, srcFilename string) (err error) {
 	return
 }
 
-func (f FTP) Download(srcFilename string, destFilename string) (err error) {
+func (f Ftp) Download(srcFilename string, destFilename string) (err error) {
 	var (
 		rsp      *ftp.Response
 		destFile *os.File
@@ -165,7 +167,7 @@ func (f FTP) Download(srcFilename string, destFilename string) (err error) {
 	return
 }
 
-func (f FTP) String() string {
+func (f Ftp) String() string {
 	jsonBytes, _ := json.MarshalIndent(f, "", "    ")
 
 	return string(jsonBytes)
