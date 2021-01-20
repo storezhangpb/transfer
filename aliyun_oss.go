@@ -34,6 +34,7 @@ func (ao AliyunOss) getBucket() (bucket *oss.Bucket, err error) {
 			"bucket":   ao.Bucket,
 			"error":    err,
 		}).Error("创建Oss客户端失败")
+
 		return
 	}
 
@@ -59,6 +60,7 @@ func (ao AliyunOss) Upload(destFilename string, srcFilename string) (err error) 
 			"filename": srcFilename,
 			"error":    err,
 		}).Error("创建Bucket对象失败")
+
 		return
 	}
 
@@ -70,6 +72,8 @@ func (ao AliyunOss) Upload(destFilename string, srcFilename string) (err error) 
 			"filename": srcFilename,
 			"error":    err,
 		}).Error("上传文件失败")
+
+		err = ErrorUpload
 	} else {
 		log.WithFields(log.Fields{
 			"endPoint": ao.EndPoint,
@@ -93,6 +97,7 @@ func (ao AliyunOss) Download(srcFilename string, destFilename string) (err error
 			"filename": destFilename,
 			"error":    err,
 		}).Error("创建Bucket对象失败")
+
 		return
 	}
 

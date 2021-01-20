@@ -72,6 +72,8 @@ func (tc Http) Upload(destFilename string, srcFilename string) (err error) {
 			"filename":       srcFilename,
 			"error":          err,
 		}).Error("上传文件失败")
+
+		err = ErrorUpload
 	} else {
 		log.WithFields(log.Fields{
 			"preassignedURL": tc.Url,
@@ -117,6 +119,8 @@ func (tc Http) Download(srcFilename string, destFilename string) (err error) {
 			"filename":       srcFilename,
 			"error":          err,
 		}).Error("下载文件失败")
+
+		err = ErrorDownload
 	} else {
 		log.WithFields(log.Fields{
 			"preassignedURL": tc.Url,

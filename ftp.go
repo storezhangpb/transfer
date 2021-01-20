@@ -41,6 +41,7 @@ func (f Ftp) init() (err error) {
 				"password": f.Password,
 				"error":    err,
 			}).Error("连接Ftp服务失败")
+
 			return
 		}
 
@@ -76,6 +77,7 @@ func (f Ftp) Upload(destFilename string, srcFilename string) (err error) {
 			"destFilename": destFilename,
 			"error":        err,
 		}).Error("打开上传文件失败")
+
 		return
 	}
 
@@ -89,6 +91,8 @@ func (f Ftp) Upload(destFilename string, srcFilename string) (err error) {
 			"destFilename": destFilename,
 			"error":        err,
 		}).Error("上传文件失败")
+
+		err = ErrorUpload
 	} else {
 		log.WithFields(log.Fields{
 			"addr":         f.Addr,
@@ -126,6 +130,7 @@ func (f Ftp) Download(srcFilename string, destFilename string) (err error) {
 			"destFilename": destFilename,
 			"error":        err,
 		}).Error("下载文件失败")
+
 		return
 	} else {
 		log.WithFields(log.Fields{
@@ -137,7 +142,9 @@ func (f Ftp) Download(srcFilename string, destFilename string) (err error) {
 			"destFilename": destFilename,
 		}).Debug("下载文件成功")
 	}
-	defer rsp.Close()
+	defer func() {
+		_ = rsp.Close()
+	}()
 
 	if destFile, err = os.Create(destFilename); nil != err {
 		log.WithFields(log.Fields{
@@ -149,6 +156,7 @@ func (f Ftp) Download(srcFilename string, destFilename string) (err error) {
 			"destFilename": destFilename,
 			"error":        err,
 		}).Error("创建下载文件失败")
+
 		return
 	}
 
