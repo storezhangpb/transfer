@@ -1,8 +1,6 @@
 package transfer
 
 import (
-	`encoding/json`
-
 	`github.com/storezhang/gox`
 )
 
@@ -27,10 +25,4 @@ func (lf LocalFile) Download(srcFilename string, destFilename string) (err error
 	_, err = gox.CopyFile(srcFilename, destFilename)
 
 	return
-}
-
-func (lf LocalFile) String() string {
-	jsonBytes, _ := json.MarshalIndent(lf, "", "    ")
-
-	return string(jsonBytes)
 }

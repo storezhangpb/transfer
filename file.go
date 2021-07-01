@@ -8,7 +8,6 @@ import (
 )
 
 const (
-	// 存储类型
 	// FileTypeHttp Http存储
 	FileTypeHttp FileType = "http"
 	// FileTypeAliyunOss 阿里云Oss
@@ -26,20 +25,27 @@ type (
 	// File 文件
 	File struct {
 		// Type 类型
-		Type FileType `json:"type" validate:"required,oneof=http oss ftp local"`
+		Type FileType `json:"type" validate:"required,oneof=http oss cos ftp local"`
 		// Filename 文件名
 		Filename string `json:"filename" validate:"required"`
+		// Checksum 文件校验
+		Checksum gox.Checksum `json:"checksum" validate:"omitempty,structonly"`
 		// Storage 存储
 		Storage interface{} `json:"storage"`
 	}
 )
 
-func NewFile(fileType FileType, filename string, storage interface{}) File {
-	return File{
+func NewFile(fileType FileType, filename string, storage interface{}, checksums ...gox.Checksum) File {
+	file := File{
 		Type:     fileType,
 		Filename: filename,
 		Storage:  storage,
 	}
+	if 1 == len(checksums) {
+		file.Checksum = checksums[0]
+	}
+
+	return file
 }
 
 func (f *File) Upload(filename string) (err error) {
@@ -97,10 +103,4 @@ func (f *File) UnmarshalJSON(data []byte) (err error) {
 	}
 
 	return
-}
-
-func (f File) String() string {
-	jsonBytes, _ := json.MarshalIndent(f, "", "    ")
-
-	return string(jsonBytes)
 }

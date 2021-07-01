@@ -1,14 +1,12 @@
 package transfer
 
 import (
-	`encoding/json`
 	`io`
 	`os`
 	`path/filepath`
 	`time`
 
 	`github.com/jlaffaye/ftp`
-	log `github.com/sirupsen/logrus`
 )
 
 var _ Transfer = (*Ftp)(nil)
@@ -16,167 +14,74 @@ var _ Transfer = (*Ftp)(nil)
 // Ftp Ftp存储
 type Ftp struct {
 	// 地址
-	Addr string `json:"addr"`
+	Addr string `json:"addr" validate:"required"`
 	// 用户名
-	Username string `json:"username"`
+	Username string `json:"username" validate:"required"`
 	// 密码
-	Password string `json:"password"`
+	Password string `json:"password" validate:"required"`
 	// 客户端
 	client *ftp.ServerConn
 	// 是否已经初始化
-	startup bool
+	initialized bool
 }
 
+// NewFtpFile 创建一个Ftp类型的文件
 func NewFtpFile(filename string, ftp Ftp) File {
 	return NewFile(FileTypeFtp, filename, ftp)
 }
 
 func (f Ftp) init() (err error) {
-	if !f.startup {
-		if f.client, err = ftp.Dial(f.Addr, ftp.DialWithTimeout(5*time.Second)); err != nil {
-			log.WithFields(log.Fields{
-				"type":     "ftp",
-				"addr":     f.Addr,
-				"username": f.Username,
-				"password": f.Password,
-				"error":    err,
-			}).Error("连接Ftp服务失败")
-
-			return
-		}
-
-		if err = f.client.Login(f.Username, f.Password); err != nil {
-			log.WithFields(log.Fields{
-				"type":     "ftp",
-				"addr":     f.Addr,
-				"username": f.Username,
-				"password": f.Password,
-				"error":    err,
-			}).Error("登录Ftp服务失败")
-		}
+	if f.initialized {
+		return
 	}
+
+	if f.client, err = ftp.Dial(f.Addr, ftp.DialWithTimeout(5*time.Second)); err != nil {
+		return
+	}
+	err = f.client.Login(f.Username, f.Password)
 
 	return
 }
 
 func (f Ftp) Upload(destFilename string, srcFilename string) (err error) {
-	var srcFile *os.File
-
 	if err = f.init(); nil != err {
 		return
 	}
 
 	// 打开文件
+	var srcFile *os.File
 	if srcFile, err = os.Open(srcFilename); nil != err {
-		log.WithFields(log.Fields{
-			"type":         "ftp",
-			"addr":         f.Addr,
-			"username":     f.Username,
-			"password":     f.Password,
-			"srcFilename":  srcFilename,
-			"destFilename": destFilename,
-			"error":        err,
-		}).Error("打开上传文件失败")
-
 		return
 	}
 
 	if err = f.client.Stor(destFilename, srcFile); nil != err {
-		log.WithFields(log.Fields{
-			"type":         "ftp",
-			"addr":         f.Addr,
-			"username":     f.Username,
-			"password":     f.Password,
-			"srcFilename":  srcFilename,
-			"destFilename": destFilename,
-			"error":        err,
-		}).Error("上传文件失败")
-
 		err = ErrorUpload
-	} else {
-		log.WithFields(log.Fields{
-			"addr":         f.Addr,
-			"username":     f.Username,
-			"password":     f.Password,
-			"srcFilename":  srcFilename,
-			"destFilename": destFilename,
-		}).Error("上传文件成功")
 	}
 
 	return
 }
 
 func (f Ftp) Download(srcFilename string, destFilename string) (err error) {
-	var (
-		rsp      *ftp.Response
-		destFile *os.File
-	)
-
 	if err = f.init(); nil != err {
 		return
 	}
-
 	if err = f.client.ChangeDir(filepath.Dir(srcFilename)); nil != err {
 		return
 	}
 
-	if rsp, err = f.client.Retr(filepath.Ext(srcFilename)); err != nil {
-		log.WithFields(log.Fields{
-			"type":         "ftp",
-			"addr":         f.Addr,
-			"username":     f.Username,
-			"password":     f.Password,
-			"srcFilename":  srcFilename,
-			"destFilename": destFilename,
-			"error":        err,
-		}).Error("下载文件失败")
-
+	var rsp *ftp.Response
+	if rsp, err = f.client.Retr(filepath.Ext(srcFilename)); nil != err {
 		return
-	} else {
-		log.WithFields(log.Fields{
-			"type":         "ftp",
-			"addr":         f.Addr,
-			"username":     f.Username,
-			"password":     f.Password,
-			"srcFilename":  srcFilename,
-			"destFilename": destFilename,
-		}).Debug("下载文件成功")
 	}
 	defer func() {
 		_ = rsp.Close()
 	}()
 
+	var destFile *os.File
 	if destFile, err = os.Create(destFilename); nil != err {
-		log.WithFields(log.Fields{
-			"type":         "ftp",
-			"addr":         f.Addr,
-			"username":     f.Username,
-			"password":     f.Password,
-			"srcFilename":  srcFilename,
-			"destFilename": destFilename,
-			"error":        err,
-		}).Error("创建下载文件失败")
-
 		return
 	}
-
-	if _, err = io.Copy(destFile, rsp); nil != err {
-		log.WithFields(log.Fields{
-			"type":         "ftp",
-			"addr":         f.Addr,
-			"username":     f.Username,
-			"password":     f.Password,
-			"srcFilename":  srcFilename,
-			"destFilename": destFilename,
-			"error":        err,
-		}).Error("写入下载文件失败")
-	}
+	_, err = io.Copy(destFile, rsp)
 
 	return
-}
-
-func (f Ftp) String() string {
-	jsonBytes, _ := json.MarshalIndent(f, "", "    ")
-
-	return string(jsonBytes)
 }
