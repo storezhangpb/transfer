@@ -7,33 +7,17 @@ import (
 	`github.com/storezhang/gox`
 )
 
-const (
-	// FileTypeHttp Http存储
-	FileTypeHttp FileType = "http"
-	// FileTypeAliyunOss 阿里云Oss
-	FileTypeAliyunOss FileType = "oss"
-	// FileTypeFtp Ftp存储
-	FileTypeFtp FileType = "ftp"
-	// FileTypeLocalFile 本地存储
-	FileTypeLocalFile FileType = "local"
-)
-
-type (
-	// FileType 文件类型
-	FileType string
-
-	// File 文件
-	File struct {
-		// Type 类型
-		Type FileType `json:"type" validate:"required,oneof=http oss cos ftp local"`
-		// Filename 文件名
-		Filename string `json:"filename" validate:"required"`
-		// Checksum 文件校验
-		Checksum gox.Checksum `json:"checksum" validate:"omitempty,structonly"`
-		// Storage 存储
-		Storage interface{} `json:"storage"`
-	}
-)
+// File 文件
+type File struct {
+	// Type 类型
+	Type FileType `json:"type" validate:"required,oneof=http oss cos ftp local"`
+	// Filename 文件名
+	Filename string `json:"filename" validate:"required"`
+	// Checksum 文件校验
+	Checksum gox.Checksum `json:"checksum" validate:"omitempty,structonly"`
+	// Storage 存储
+	Storage interface{} `json:"storage"`
+}
 
 func NewFile(fileType FileType, filename string, storage interface{}, checksums ...gox.Checksum) File {
 	file := File{
@@ -80,8 +64,8 @@ func (f *File) UnmarshalJSON(data []byte) (err error) {
 			return
 		}
 		f.Storage = cos
-	case FileTypeAliyunOss:
-		oss := AliyunOss{}
+	case FileTypeOss:
+		oss := Oss{}
 		if err = json.Unmarshal(rawMsg, &oss); nil != err {
 			return
 		}
