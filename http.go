@@ -35,7 +35,7 @@ func (h Http) Upload(_ string, srcFilename string) (err error) {
 		fileBytes   []byte
 	)
 
-	if contentType, err = gox.GetContentType(srcFilename); nil != err {
+	if contentType, err = gox.ContentType(srcFilename); nil != err {
 		return
 	}
 	if fileBytes, err = ioutil.ReadFile(srcFilename); nil != err {
