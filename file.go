@@ -59,17 +59,23 @@ func (f *File) UnmarshalJSON(data []byte) (err error) {
 
 	switch f.Type {
 	case FileTypeHttp:
-		cos := Http{}
-		if err = json.Unmarshal(rawMsg, &cos); nil != err {
+		http := Http{}
+		if err = json.Unmarshal(rawMsg, &http); nil != err {
 			return
 		}
-		f.Storage = cos
+		f.Storage = http
 	case FileTypeOss:
 		oss := Oss{}
 		if err = json.Unmarshal(rawMsg, &oss); nil != err {
 			return
 		}
 		f.Storage = oss
+	case FileTypeCos:
+		cos := Cos{}
+		if err = json.Unmarshal(rawMsg, &cos); nil != err {
+			return
+		}
+		f.Storage = cos
 	case FileTypeFtp:
 		ftp := Ftp{}
 		if err = json.Unmarshal(rawMsg, &ftp); nil != err {

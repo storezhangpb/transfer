@@ -15,8 +15,8 @@ var _ Transfer = (*Cos)(nil)
 
 // Cos 腾讯云对象存储
 type Cos struct {
-	// 端点
-	Endpoint string `json:"endpoint"`
+	// 通信地址
+	Url string `json:"url"`
 	// 基础路径
 	Base string `json:"base"`
 	// 授权
@@ -59,7 +59,7 @@ func (c *Cos) Download(srcFilename string, destFilename string) (err error) {
 
 func (c *Cos) getClient() (client *cos.Client, err error) {
 	var bucketUrl *url.URL
-	if bucketUrl, err = url.Parse(c.Endpoint); nil != err {
+	if bucketUrl, err = url.Parse(c.Url); nil != err {
 		return
 	}
 
