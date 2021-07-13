@@ -37,12 +37,16 @@ func (f *File) Upload(filename string) (err error) {
 }
 
 func (f *File) Download(filename string, force bool) (err error) {
-	if force && gox.IsFileExist(filename) {
-		if err = os.Remove(filename); nil != err {
-			return
+	if gox.IsFileExist(filename) {
+		if force {
+			if err = os.Remove(filename); nil != err {
+				return
+			}
+			err = f.Storage.(Downloader).Download(f.Filename, filename)
 		}
+	} else {
+		err = f.Storage.(Downloader).Download(f.Filename, filename)
 	}
-	err = f.Storage.(Downloader).Download(f.Filename, filename)
 
 	return
 }
@@ -59,31 +63,31 @@ func (f *File) UnmarshalJSON(data []byte) (err error) {
 
 	switch f.Type {
 	case FileTypeHttp:
-		http := Http{}
+		http := new(Http)
 		if err = json.Unmarshal(rawMsg, &http); nil != err {
 			return
 		}
 		f.Storage = http
 	case FileTypeOss:
-		oss := Oss{}
+		oss := new(Oss)
 		if err = json.Unmarshal(rawMsg, &oss); nil != err {
 			return
 		}
 		f.Storage = oss
 	case FileTypeCos:
-		cos := Cos{}
+		cos := new(Cos)
 		if err = json.Unmarshal(rawMsg, &cos); nil != err {
 			return
 		}
 		f.Storage = cos
 	case FileTypeFtp:
-		ftp := Ftp{}
+		ftp := new(Ftp)
 		if err = json.Unmarshal(rawMsg, &ftp); nil != err {
 			return
 		}
 		f.Storage = ftp
 	case FileTypeLocalFile:
-		local := LocalFile{}
+		local := new(Local)
 		if err = json.Unmarshal(rawMsg, &local); nil != err {
 			return
 		}

@@ -26,7 +26,7 @@ func NewHttpFile(filename string, url string, method gox.HttpMethod) File {
 	})
 }
 
-func (h Http) Upload(_ string, srcFilename string) (err error) {
+func (h *Http) Upload(_ string, srcFilename string) (err error) {
 	var (
 		req *resty.Request
 		rsp *resty.Response
@@ -63,7 +63,7 @@ func (h Http) Upload(_ string, srcFilename string) (err error) {
 	return
 }
 
-func (h Http) Download(_ string, destFilename string) (err error) {
+func (h *Http) Download(_ string, destFilename string) (err error) {
 	var (
 		req *resty.Request
 		rsp *resty.Response

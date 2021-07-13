@@ -31,7 +31,7 @@ func NewCosFile(filename string, cos Cos) File {
 	return NewFile(FileTypeCos, filename, cos)
 }
 
-func (c *Cos) Upload(destFilename string, srcFilename string) (err error) {
+func (c Cos) Upload(destFilename string, srcFilename string) (err error) {
 	var client *cos.Client
 
 	if client, err = c.getClient(); nil != err {
