@@ -5,7 +5,6 @@ import (
 	`crypto/tls`
 	`net/http`
 	`net/url`
-	`strings`
 
 	`github.com/tencentyun/cos-go-sdk-v5`
 	_ `github.com/tencentyun/cos-go-sdk-v5`
@@ -37,9 +36,7 @@ func (c Cos) Upload(destFilename string, srcFilename string) (err error) {
 	if client, err = c.getClient(); nil != err {
 		return
 	}
-	paths := strings.Split(c.Base, c.Separator)
-	paths = append([]string{destFilename}, paths...)
-	_, _, err = client.Object.Upload(context.Background(), strings.Join(paths, c.Separator), srcFilename, nil)
+	_, _, err = client.Object.Upload(context.Background(), path(c.Base, c.Separator, destFilename), srcFilename, nil)
 
 	return
 }
@@ -50,9 +47,7 @@ func (c *Cos) Download(srcFilename string, destFilename string) (err error) {
 	if client, err = c.getClient(); nil != err {
 		return
 	}
-	paths := strings.Split(c.Base, c.Separator)
-	paths = append([]string{srcFilename}, paths...)
-	_, err = client.Object.Download(context.Background(), strings.Join(paths, c.Separator), destFilename, nil)
+	_, err = client.Object.Download(context.Background(), path(c.Base, c.Separator, srcFilename), destFilename, nil)
 
 	return
 }
