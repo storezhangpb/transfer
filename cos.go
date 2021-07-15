@@ -15,14 +15,17 @@ var _ Transfer = (*Cos)(nil)
 // Cos 腾讯云对象存储
 type Cos struct {
 	// 通信地址
-	Url string `json:"url"`
+	Url string
 	// 基础路径
-	Base string `json:"base"`
-	// 授权
-	SecretId  string `json:"secretId"`
-	SecretKey string `json:"secretKey"`
+	Base string
+	// 授权，相当于用户名
+	SecretId string
+	// 授权，相当于密码
+	SecretKey string
+	//  临时密钥
+	Token string
 	// 分隔符
-	Separator string `default:"/" json:"separator"`
+	Separator string `default:"/"`
 }
 
 // NewCosFile 创建一个腾讯云对象存储文件
@@ -60,8 +63,9 @@ func (c *Cos) getClient() (client *cos.Client, err error) {
 
 	client = cos.NewClient(&cos.BaseURL{BucketURL: bucketUrl}, &http.Client{
 		Transport: &cos.AuthorizationTransport{
-			SecretID:  c.SecretId,
-			SecretKey: c.SecretKey,
+			SecretID:     c.SecretId,
+			SecretKey:    c.SecretKey,
+			SessionToken: c.Token,
 			// nolint:gosec
 			Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}},
 		},
