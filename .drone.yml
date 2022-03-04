@@ -1,0 +1,38 @@
+kind: pipeline
+type: docker
+name: 文件传输
+
+
+clone:
+  disable: true
+
+
+trigger:
+  event:
+    exclude:
+      - pull_request
+
+
+environment:
+  VERSION: 0.0.1
+  GO: lang/go
+
+
+steps:
+  - name: 代码
+    image: dronestock/git
+
+  - name: 编译
+    image: dronestock/protobuf
+    settings:
+      - protoc --experimental_allow_proto3_optional --go_out=plugins=grpc:lang/go *.proto
+
+  - name: 推送Golang版本
+    image: dronestock/git
+    settings:
+      remote: git@github.com:goexl/transfer.git
+      folder: $${GO}
+      commit: ${DRONE_COMMIT_MESSAGE}
+      tag: v$${VERSION}
+      ssh_key:
+        from_secret: ssh_key_github

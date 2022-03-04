@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package storezhang.transfer;
+
+
+option java_multiple_files = true;
+option java_package = "com.nezha.core";
+
+option go_package = "github.com/storezhang/transfer;transfer";
+
+
+// 腾讯云对象存储
+message Ftp {
+  // 地址
+  string addr = 3;
+  // 用户名
+  string username = 4;
+  // 密码
+  string password = 5;
+}

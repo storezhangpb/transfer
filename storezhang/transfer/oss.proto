@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package storezhang.transfer;
+
+
+option java_multiple_files = true;
+option java_package = "com.nezha.core";
+
+option go_package = "github.com/storezhang/transfer;transfer";
+
+
+// 阿里云对象存储
+message Oss {
+  // 通信地址
+  string endpoint = 3;
+  // 基础路径
+  string base = 4;
+  // 授权，相当于用户名
+  string id = 5;
+  // 授权，相当于密码
+  string key = 6;
+  // 临时密钥
+  string token = 7;
+  // 分隔符
+  // gotags: default:"/"
+  string separator = 8;
+}
