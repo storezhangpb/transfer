@@ -7,12 +7,6 @@ clone:
   disable: true
 
 
-trigger:
-  event:
-    exclude:
-      - pull_request
-
-
 environment:
   VERSION: 0.0.1
   GO: lang/go
@@ -25,7 +19,8 @@ steps:
   - name: 编译
     image: dronestock/protobuf
     settings:
-      - protoc --experimental_allow_proto3_optional --go_out=plugins=grpc:lang/go *.proto
+      outputs:
+        - go => $${GO}
 
   - name: 推送Golang版本
     image: dronestock/git
