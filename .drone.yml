@@ -19,6 +19,8 @@ steps:
   - name: 编译
     image: dronestock/protobuf
     settings:
+      debug: true
+      verbose: true
       outputs:
         - go => $${GO}
 
