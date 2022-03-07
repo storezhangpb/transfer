@@ -10,6 +10,7 @@ clone:
 environment:
   VERSION: 0.0.1
   GO: lang/go
+  JAVA: lang/java
 
 
 steps:
@@ -23,11 +24,14 @@ steps:
       verbose: true
       outputs:
         - go => $${GO}
+        - java => $${JAVA}
+      opts:
+        - go => module=github.com/storezhang/transfer
 
-  - name: 推送Golang版本
+  - name: Golang
     image: dronestock/git
     settings:
-      remote: git@github.com:goexl/transfer.git
+      remote: git@github.com:storezhang/transfer.git
       folder: $${GO}
       commit: ${DRONE_COMMIT_MESSAGE}
       tag: v$${VERSION}
