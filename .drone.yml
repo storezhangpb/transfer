@@ -38,6 +38,9 @@ steps:
 
   - name: Java
     image: dronestock/maven
+    volumes:
+      - name: maven
+        path: /var/lib/maven
     settings:
       folder: $${JAVA}
       version: $${VERSION}
@@ -45,3 +48,9 @@ steps:
         from_secret: username_nexus
       password:
         from_secret: password_nexus
+
+
+volumes:
+  - name: maven
+    host:
+      path: /var/lib/cache/maven
