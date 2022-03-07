@@ -8,6 +8,10 @@
     <groupId>tech.storezhang</groupId>
     <artifactId>transfer</artifactId>
     <version>0.0.1</version>
+    <url>https://transfer.storezhang.tech</url>
+    <description>
+        文件传输Protobuf协议Java版，可以提供基础的文件传输操作，方便在开发中使用文件传输。支持以下文件传输：1、纯Http；2、Ftp传输；3、腾讯云对象存储；4、阿里云对象存储
+    </description>
 
     <dependencies>
         <dependency>
@@ -16,4 +20,44 @@
             <version>3.19.4</version>
         </dependency>
     </dependencies>
+
+    <developers>
+        <developer>
+            <id>storezhang</id>
+            <name>张宗良</name>
+            <email>storezhang@gmail.com</email>
+            <url>https://storezhang.tech</url>
+            <roles>
+                <role>Project Manager</role>
+                <role>Architect</role>
+            </roles>
+            <organization>Storezhang</organization>
+            <organizationUrl>https://github.com/storezhang</organizationUrl>
+            <properties>
+                <qq>160290688</qq>
+                <wechat>storezhang</wechat>
+            </properties>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>https://www.baidu.com/banseon/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>
+            scm:git:https://github.com/storezhangpb/transfer
+        </connection>
+        <developerConnection>
+            scm:git:https://github.com/storezhang
+        </developerConnection>
+        <tag/>
+        <url>https://github.com/storezhangpb/transfer</url>
+    </scm>
 </project>
