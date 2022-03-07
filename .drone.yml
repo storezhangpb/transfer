@@ -35,3 +35,9 @@ steps:
       tag: v$${VERSION}
       ssh_key:
         from_secret: ssh_key_github
+
+  - name: Java
+    image: dronestock/maven
+    settings:
+      folder: $${JAVA}
+      version: $${VERSION}

@@ -7,6 +7,6 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>tech.storezhang</groupId>
-    <artifactId>storezhang</artifactId>
+    <artifactId>transfer</artifactId>
     <version>0.0.1</version>
 </project>
