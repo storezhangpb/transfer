@@ -42,8 +42,6 @@ steps:
       - name: maven
         path: /var/lib/maven
     settings:
-      debug: true
-      verbose: true
       folder: $${JAVA}
       version: $${VERSION}
       username:
