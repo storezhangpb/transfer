@@ -17,7 +17,7 @@ steps:
     image: dronestock/git
 
   - name: 编译
-    image: dronestock/protobuf
+    image: dronestock/protobuf:0.0.2
     settings:
       outputs:
         - go => $${GO}
