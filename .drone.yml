@@ -43,5 +43,5 @@ steps:
       version: $${VERSION}
       username:
         from_secret: username_nexus
-      passrod:
+      password:
         from_secret: password_nexus
