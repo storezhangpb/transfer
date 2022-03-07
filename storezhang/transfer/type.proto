@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package storezhang.transfer;
+
+
+option java_multiple_files = true;
+option java_package = "tech.storezhang.transfer";
+
+option go_package = "github.com/storezhang/transfer;transfer";
+
+
+// 类型
+enum Type {
+  // 未设置，不要使用
+  TYPE_UNKNOWN = 0;
+
+  // 纯Http
+  HTTP = 1;
+  // 文件传输
+  FTP = 2;
+  // 阿里云对象存储
+  OSS = 3;
+  // 腾讯云对象存储
+  COS = 4;
+
+  // 本地
+  LOCAL = 15;
+}

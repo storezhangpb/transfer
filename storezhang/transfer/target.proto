@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package storezhang.transfer;
+
+import "google/protobuf/any.proto";
+import "storezhang/transfer/type.proto";
+
+
+option java_multiple_files = true;
+option java_package = "tech.storezhang.transfer";
+
+option go_package = "github.com/storezhang/transfer;transfer";
+
+
+// 目标
+message Target {
+  // 文件名
+  string filename = 3;
+  // 类型
+  storezhang.transfer.Type type = 4;
+
+  // 存储
+  google.protobuf.Any storage = 10;
+}
