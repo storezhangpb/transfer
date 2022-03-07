@@ -41,3 +41,7 @@ steps:
     settings:
       folder: $${JAVA}
       version: $${VERSION}
+      username:
+        from_secret: username_nexus
+      passrod:
+        from_secret: password_nexus
