@@ -17,6 +17,10 @@ steps:
   - name: 代码
     image: dronestock/git
     settings:
+      lists:
+        - 1
+        - fd
+        - 2
       java:
         test: ok
         hello: world
