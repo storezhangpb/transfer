@@ -16,27 +16,15 @@ environment:
 steps:
   - name: 代码
     image: dronestock/git
-    settings:
-      lists:
-        - 1
-      java:
-        test: ok
-        hello: world
-        ds:
-          - 1
-          - 2
-          - ggg
-    commands:
-      - env
 
   - name: 编译
     image: dronestock/protobuf
     settings:
       outputs:
-        - go => $${GO}
-        - java => $${JAVA}
+        go: $${GO}
+        java: $${JAVA}
       opts:
-        - go => module=github.com/storezhang/transfer
+        go: module=github.com/storezhang/transfer
 
   - name: Golang
     image: dronestock/git
