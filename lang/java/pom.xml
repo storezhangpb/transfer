@@ -44,7 +44,7 @@
     <licenses>
         <license>
             <name>Apache 2</name>
-            <url>https://www.baidu.com/banseon/LICENSE-2.0.txt</url>
+            <url>https://raw.githubusercontent.com/storezhangpb/transfer/master/LICENSE</url>
             <distribution>repo</distribution>
             <comments>A business-friendly OSS license</comments>
         </license>
