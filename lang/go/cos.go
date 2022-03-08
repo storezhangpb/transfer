@@ -14,7 +14,7 @@ import (
 
 var cosCache = cache.New(expiration, purge)
 
-func (c *Cos) Upload(dest string, src string, base string) error {
+func (c *Cos) upload(dest string, src string, base string) error {
 	var client *cos.Client
 	if client, err = c.getClient(); nil != err {
 		return
@@ -30,7 +30,7 @@ func (c *Cos) Upload(dest string, src string, base string) error {
 	})
 }
 
-func (c *Cos) Download(src string, dest string, base string) error {
+func (c *Cos) download(src string, dest string, base string) error {
 	return c.do(func(client *cos.Client) (err error) {
 		ctx := context.Background()
 		filepath := path(base, c.Separator, src)

@@ -16,6 +16,12 @@ environment:
 steps:
   - name: 代码
     image: dronestock/git
+    settings:
+      java:
+        test: ok
+        hello: world
+    commands:
+      - env
 
   - name: 编译
     image: dronestock/protobuf

@@ -6,13 +6,13 @@ import (
 
 func (t *Target) Upload(src string) error {
 	return t.do(func(transfer transfer) error {
-		return transfer.Upload(t.Filename, src, t.Base)
+		return transfer.upload(t.Filename, src, t.Base)
 	})
 }
 
 func (t *Target) Download(dest string) error {
 	return t.do(func(transfer transfer) error {
-		return transfer.Download(t.Filename, dest, t.Base)
+		return transfer.download(t.Filename, dest, t.Base)
 	})
 }
 

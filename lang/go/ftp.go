@@ -13,7 +13,7 @@ import (
 
 var ftpCache = cache.New(expiration, purge)
 
-func (f *Ftp) Upload(dest string, src string, _ string) error {
+func (f *Ftp) upload(dest string, src string, _ string) error {
 	return f.do(func(client *ftp.ServerConn) (err error) {
 		if srcFile, openErr := os.Open(src); nil != openErr {
 			err = openErr
@@ -25,7 +25,7 @@ func (f *Ftp) Upload(dest string, src string, _ string) error {
 	})
 }
 
-func (f *Ftp) Download(src string, dest string, _ string) error {
+func (f *Ftp) download(src string, dest string, _ string) error {
 	return f.do(func(client *ftp.ServerConn) (err error) {
 		if err = client.ChangeDir(filepath.Dir(src)); nil != err {
 			return

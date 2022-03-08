@@ -9,13 +9,13 @@ import (
 
 var ossCache = cache.New(expiration, purge)
 
-func (o *Oss) Upload(dest string, src string, _ string) error {
+func (o *Oss) upload(dest string, src string, _ string) error {
 	return o.do(func(bucket *oss.Bucket) error {
 		return bucket.PutObjectFromFile(dest, src)
 	})
 }
 
-func (o *Oss) Download(src string, dest string, _ string) error {
+func (o *Oss) download(src string, dest string, _ string) error {
 	return o.do(func(bucket *oss.Bucket) error {
 		return bucket.GetObjectToFile(src, dest)
 	})

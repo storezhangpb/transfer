@@ -21,6 +21,6 @@ message Cos {
   string token = 6;
 
   // 分隔符
-  // gotags: default:"/"
+  // @gotags: default:"/"
   string separator = 15;
 }
