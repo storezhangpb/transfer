@@ -15,8 +15,9 @@ require (
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 )
 
+require google.golang.org/protobuf v1.26.0
+
 require (
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/mozillazg/go-httpheader v0.2.1 // indirect
-	google.golang.org/protobuf v1.26.0 // indirect
 )
