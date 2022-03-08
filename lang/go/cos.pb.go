@@ -1,11 +1,13 @@
 package transfer
 
-// Cos 不要删除此文件，只是点位
+// Cos 不要删除此文件，只是占位
 type Cos struct {
-	Url       string
-	Base      string
-	Id        string
-	Key       string
-	Token     string
+	message
+
+	Url   string
+	Id    string
+	Key   string
+	Token string
+
 	Separator string
 }

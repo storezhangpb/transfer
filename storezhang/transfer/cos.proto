@@ -13,15 +13,14 @@ option go_package = "github.com/storezhang/transfer;transfer";
 message Cos {
   // 通信地址
   string url = 3;
-  // 基础路径
-  string base = 4;
   // 授权，相当于用户名
-  string id = 5;
+  string id = 4;
   // 授权，相当于密码
-  string key = 6;
+  string key = 5;
   // 临时密钥
-  string token = 7;
+  string token = 6;
+
   // 分隔符
   // gotags: default:"/"
-  string separator = 8;
+  string separator = 15;
 }

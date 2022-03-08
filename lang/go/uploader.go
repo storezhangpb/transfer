@@ -1,7 +1,7 @@
 package transfer
 
-// Uploader 上传
-type Uploader interface {
+// uploader 上传
+type uploader interface {
 	// Upload 上传文件
-	Upload(destFilename string, srcFilename string) (err error)
+	Upload(dest string, src string, base string) (err error)
 }

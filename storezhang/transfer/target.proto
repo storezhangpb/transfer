@@ -16,8 +16,10 @@ option go_package = "github.com/storezhang/transfer;transfer";
 message Target {
   // 文件名
   string filename = 3;
+  // 基础路径
+  string base = 4;
   // 类型
-  storezhang.transfer.Type type = 4;
+  storezhang.transfer.Type type = 5;
 
   // 存储
   google.protobuf.Any storage = 10;
