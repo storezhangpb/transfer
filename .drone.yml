@@ -42,7 +42,6 @@ steps:
       - name: maven
         path: /var/lib/maven
     settings:
-      repository: https://oss.sonatype.org/service/local/staging/deploy/maven2
       folder: $${JAVA}
       version: $${VERSION}
       username:
