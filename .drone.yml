@@ -20,6 +20,10 @@ steps:
       java:
         test: ok
         hello: world
+        ds:
+          - 1
+          - 2
+          - ggg
     commands:
       - env
 
