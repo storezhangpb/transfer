@@ -19,8 +19,6 @@ steps:
     settings:
       lists:
         - 1
-        - fd
-        - 2
       java:
         test: ok
         hello: world
