@@ -24,7 +24,8 @@ steps:
         go: $${GO}
         java: $${JAVA}
       opts:
-        go: module=github.com/storezhang/transfer
+        go:
+          - module=github.com/storezhang/transfer
 
   - name: Golang
     image: dronestock/git
