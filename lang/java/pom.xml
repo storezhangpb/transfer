@@ -13,8 +13,8 @@
     <url>https://transfer.storezhang.tech</url>
     <description>
         文件传输Protobuf协议Java版，可以提供基础的文件传输操作，方便在开发中使用文件传输。支持以下文件传输：
-        1、纯Http
-        2、Ftp传输
+        1、Http协议
+        2、Ftp协议
         3、腾讯云对象存储
         4、阿里云对象存储
     </description>
