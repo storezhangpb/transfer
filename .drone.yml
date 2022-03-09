@@ -23,9 +23,8 @@ steps:
       outputs:
         go: $${GO}
         java: $${JAVA}
-      opts:
-        go:
-          - module=github.com/storezhang/transfer
+      opt:
+        go: module=github.com/storezhang/transfer
 
   - name: Golang
     image: dronestock/git
