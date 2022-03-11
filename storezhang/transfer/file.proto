@@ -12,10 +12,10 @@ option java_package = "tech.storezhang.transfer";
 option go_package = "github.com/storezhang/transfer;transfer";
 
 
-// 目标
-message Target {
+// 文件
+message File {
   // 文件名
-  string filename = 3;
+  string name = 3;
   // 基础路径
   string base = 4;
   // 类型

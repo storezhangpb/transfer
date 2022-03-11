@@ -1,6 +1,6 @@
 kind: pipeline
 type: docker
-name: 文件传输
+name: Transfer
 
 
 clone:
@@ -8,7 +8,7 @@ clone:
 
 
 environment:
-  VERSION: 0.0.2
+  VERSION: 0.0.3
   GO: lang/go
   JAVA: lang/java
 
