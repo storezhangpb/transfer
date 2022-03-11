@@ -1,4 +1,4 @@
-module gihub.com/storezhang/transfer
+module github.com/storezhang/transfer
 
 go 1.17
 
