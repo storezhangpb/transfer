@@ -8,7 +8,7 @@ clone:
 
 
 environment:
-  VERSION: 0.0.3
+  VERSION: 0.0.4
   GO: lang/go
   JAVA: lang/java
 
